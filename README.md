@@ -1013,11 +1013,3 @@ Reconnaissance
 
 *Last updated: July 2026*
 """
-
-# Save to file
-with open('/mnt/agents/output/README.md', 'w', encoding='utf-8') as f:
-    f.write(readme_content)
-
-print(f"README.md saved successfully!")
-print(f"File size: {len(readme_content)} characters")
-print(f"Lines: {len(readme_content.splitlines())}")
