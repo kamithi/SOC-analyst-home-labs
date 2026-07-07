@@ -464,9 +464,9 @@ New-NetFirewallRule -DisplayName "Allow ICMPv4" -Protocol ICMPv4 -IcmpType 8 -Di
 
 | # | Scenario | Details |
 |---|----------|---------|
-| 1 | [Brute Force Detection](docs/lab1-brute-force.md) | RDP brute force, EventCode 4625, threshold alerting |
-| 2 | [Network Reconnaissance](docs/lab2-port-scan.md) | Nmap scans, Sysmon EventCode 3, port enumeration |
-| 3 | [C2 Beaconing](docs/lab3-beaconing.md) | Timing analysis, connection patterns, beacon detection |
+| 1 | [Brute Force Detection](docs/Lab1-Brute-force.md) | RDP brute force, EventCode 4625, threshold alerting |
+| 2 | [Network Reconnaissance & Port Scan Detection](docs/Lab2-Network-Reconnaissance-&-Port-Scan.md)| Nmap scans, Sysmon EventCode 3, port enumeration |
+| 3 | [Beaconing / C2 Detection](docs/Lab3-C2-Beaconing.md) | Timing analysis, connection patterns, beacon detection |
 | 4 | Privilege Escalation Detection | *Coming soon* |
 | 5 | Malware Detection | *Coming soon* |
 | 6 | Rule Tuning | *Coming soon* |
