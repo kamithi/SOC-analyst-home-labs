@@ -47,7 +47,7 @@ ipconfig
 
 Note the IPv4 address (e.g., `192.168.221.129`).
 
-![Windows 10 IP Configuration](screenshots/lab1/win10-ipconfig.png)
+![Windows 10 IP Configuration](../screenshots/lab1/win10-ipconfig.png)
 
 ---
 
@@ -84,7 +84,7 @@ hydra -l labuser -P ~/lab_wordlist.txt rdp://192.168.221.129 -t 1 -V -W 3
 nxc rdp 192.168.221.129 -u labuser -p ~/lab_wordlist.txt
 ```
 
-![Ncrack Brute Force Attack](screenshots/lab1/ncrack-attack.png)
+![Ncrack Brute Force Attack](../screenshots/lab1/ncrack-attack.png)
 
 ---
 
@@ -118,7 +118,7 @@ index=win_logs (EventCode=4624 OR EventCode=4625)
 | sort src_ip
 ```
 
-![Splunk EventCode 4625 Detection](screenshots/lab1/splunk-4625.png)
+![Splunk EventCode 4625 Detection](../screenshots/lab1/splunk-4625.png)
 
 ---
 
