@@ -99,7 +99,7 @@ Image Illustration
 ---
 
 
-Image illustrations(After installation)
+Image illustration(After installation)
 
 ![After installation image illustrations](screenshots/setup/Setup-image-illustration.png)
 
