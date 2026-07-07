@@ -43,7 +43,7 @@ ipconfig
 
 Note the IPv4 address (e.g., `192.168.221.129`).
 
-![Windows 10 IP Configuration](screenshots/lab1/win10-ipconfig.png)
+![Windows 10 IP Configuration](../screenshots/lab1/win10-ipconfig.png)
 
 ---
 
@@ -57,7 +57,7 @@ ncat -lvp 4444
 
 If `nc` is not available by default, `ncat` (included with Nmap) works identically.
 
-![Ncat Listener](screenshots/lab3/kali-beacon.png)
+![Ncat Listener](../screenshots/lab3/kali-beacon.png)
 
 **Expected output:**
 ```
@@ -78,7 +78,7 @@ while true; do nc 192.168.221.129 4444; sleep 30; done
 
 This creates a predictable callback pattern similar to real-world beaconing or C2 activity.
 
-![Kali Beacon Loop](screenshots/lab3/kali-beacon.png)
+![Kali Beacon Loop](../screenshots/lab3/kali-beacon.png)
 
 **What this simulates:**
 - Malware calling back to a C2 server at regular intervals
@@ -96,11 +96,11 @@ On Windows 10, open Wireshark and watch the repeated connection attempts come in
 tcp.port == 4444
 ```
 
-![Wireshark Beaconing Traffic](screenshots/lab3/Wireshark-showing-periodic-Kali-IP.png)
+![Wireshark Beaconing Traffic](../screenshots/lab3/Wireshark-showing-periodic-Kali-IP.png)
 
 
 
-![Wireshark Beaconing Traffic](screenshots/lab3/C2-Beaconing.png)
+![Wireshark Beaconing Traffic](../screenshots/lab3/C2-Beaconing.png)
 
 **What to look for:**
 - Connections from `192.168.221.128` (Kali) to `192.168.221.129:4444`
