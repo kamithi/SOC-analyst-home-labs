@@ -199,7 +199,7 @@ Get-FileHash "kalilinux-2025.2-installer-amd64.iso" -Algorithm SHA256
 | Guest OS | Linux → Debian 12.x 64-bit |
 | VM Name | `kali-attacker` |
 | Location | `C:\Users\YourName\Documents\Virtual Machines\Kali Linux\` |
-| Disk Size | 80 GB (Store as single file) |
+| Disk Size | 40 GB (Store as single file) |
 | Memory | 4096 MB |
 | Processors | 2 cores, 2 per processor |
 | Network | NAT (for installation/updates) |
@@ -489,7 +489,7 @@ New-NetFirewallRule -DisplayName "Allow ICMPv4" -Protocol ICMPv4 -IcmpType 8 -Di
 | 6 | Rule Tuning | *Coming soon* |
 | 7 | Phishing Analysis | *Coming soon* |
 
----
+-----
 
 ## MITRE ATT&CK Mapping
 
@@ -556,7 +556,7 @@ Reconnaissance
 | Event ID | Description |
 |----------|-------------|
 | 1 | Process creation |
-| 3 | Network connection — core scan/beacon detection |
+| 3 | Network connection - core scan/beacon detection |
 | 7 | Image loaded |
 | 8 | CreateRemoteThread |
 | 10 | ProcessAccess |
@@ -586,7 +586,7 @@ Reconnaissance
 
 ## Author
 
-**SOC Analyst Home Lab** — Built for educational purposes in an isolated environment.
+**SOC Analyst Home Lab** - Built for educational purposes in an isolated environment.
 
 > **Disclaimer:** This lab was built for educational purposes in an isolated environment. No production systems were used. All attack traffic stays within the Host-only virtual network.
 
