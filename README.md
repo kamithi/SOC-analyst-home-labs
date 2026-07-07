@@ -1,4 +1,4 @@
-🛡️ SOC Analyst Home Lab
+# SOC Analyst Home Lab
 
 > **Hands-on cybersecurity lab simulating real-world Security Operations Center scenarios.**
 > Built with VMware Workstation Pro, Splunk Enterprise, Kali Linux, and Windows 10.
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Lab Overview](#lab-overview)
 - [Environment](#environment)
@@ -30,7 +30,7 @@
 
 ---
 
-## 🎯 Lab Overview
+## Lab Overview
 
 This home lab provides hands-on experience in cybersecurity by simulating real-world systems and scenarios. Throughout the setup, you will work with virtual machines, networking, and security tools to understand how threats are detected and managed.
 
@@ -45,9 +45,9 @@ By the end, you will have practical skills in:
 
 | # | Scenario | Key Skills | MITRE |
 |---|----------|----------|-------|
-| 1 | [Brute Force Detection](#lab-1--brute-force-detection) | Failed logon analysis, threshold alerting | T1110.001 |
-| 2 | [Network Reconnaissance](#lab-2--network-reconnaissance--port-scan-detection) | Port scan detection, SYN analysis | T1046, T1595 |
-| 3 | [C2 Beaconing](#lab-3--beaconing--c2-detection) | Timing analysis, connection patterns | T1071 |
+| 1 | [Brute Force Detection](docs/lab1-brute-force.md) | Failed logon analysis, threshold alerting | T1110.001 |
+| 2 | [Network Reconnaissance](docs/lab2-port-scan.md) | Port scan detection, SYN analysis | T1046, T1595 |
+| 3 | [C2 Beaconing](docs/lab3-beaconing.md) | Timing analysis, connection patterns | T1071 |
 | 4 | Privilege Escalation Detection | Process analysis, token manipulation | T1134 |
 | 5 | Malware Detection | Behavioral analysis, hash verification | T1055 |
 | 6 | Rule Tuning | False positive reduction, threshold optimization | — |
@@ -55,14 +55,14 @@ By the end, you will have practical skills in:
 
 ---
 
-## 🖥️ Environment
+## Environment
 
 | Component | Details |
 |-----------|---------|
 | **Host Machine** | Physical laptop/desktop (Windows 10/11) |
 | **Hypervisor** | VMware Workstation Pro 25.x |
 | **Attacker VM** | Kali Linux (VM 1) |
-| **Target VM** | Windows 10 (VM 2) |
+| **Target VM** | Windows 10 Pro (VM 2) |
 | **SIEM** | Splunk Enterprise (on host) |
 | **Forwarder** | Splunk Universal Forwarder (on Win10) |
 | **EDR** | Microsoft Sysmon (on Win10) |
@@ -88,11 +88,11 @@ By the end, you will have practical skills in:
 +-----------------------------------------+
 ```
 
-> ⚠️ **All attack traffic stays inside the isolated Host-only network. Never expose these VMs to the internet.**
+> **Warning:** All attack traffic stays inside the isolated Host-only network. Never expose these VMs to the internet.
 
 ---
 
-## 🔧 Setup Guide
+## Setup Guide
 
 ### Prerequisites
 
@@ -118,7 +118,7 @@ VMware is now owned by Broadcom. All downloads require a free Broadcom account.
 4. Select version **25.x** (latest stable) for Windows
 5. Download the `.exe` installer
 
-> ⚠️ **Do NOT download VMware Workstation Pro 17 or earlier** — they are end-of-life and no longer receive security updates.
+> **Important:** Do NOT download VMware Workstation Pro 17 or earlier — they are end-of-life and no longer receive security updates.
 
 #### Step 2 — Install VMware
 
@@ -137,7 +137,7 @@ Confirm these networks exist:
 | VMnet1 | Host-only | 192.168.x.0 | Isolated attack lab network |
 | VMnet8 | NAT | 192.168.y.0 | Internet access for updates |
 
-> 💡 **Note your VMnet1 subnet IP.** Run `ipconfig` on your host and look for:
+> **Tip:** Note your VMnet1 subnet IP. Run `ipconfig` on your host and look for:
 > ```
 > Ethernet adapter VMware Network Adapter VMnet1:
 >    IPv4 Address......: 192.168.x.1
@@ -226,7 +226,7 @@ Install any missing tools:
 sudo apt install -y nmap wireshark metasploit-framework hydra netcat-traditional
 ```
 
-> ✅ **Take a snapshot:** `Kali-Clean Install` — Fresh install, tools verified, no attacks run yet.
+> **Take a snapshot:** `Kali-Clean Install` — Fresh install, tools verified, no attacks run yet.
 
 ---
 
@@ -254,7 +254,7 @@ sudo apt install -y nmap wireshark metasploit-framework hydra netcat-traditional
 | Processors | 2 cores, 2 per processor |
 | Network | **Host-only** |
 
-> ⚠️ **Select Windows 10 Pro** during installation — Pro has RDP server built-in.
+> **Important:** Select Windows 10 Pro during installation — Pro has RDP server built-in.
 
 #### Step 13 — Windows OOBE Setup
 
@@ -293,7 +293,7 @@ Add-LocalGroupMember -Group "Remote Desktop Users" -Member "victim"
 Add-LocalGroupMember -Group "Users" -Member "victim"
 ```
 
-> 🚨 **Security Warning:** This account is intentionally insecure. Only use inside an isolated Host-only network.
+> **Security Warning:** This account is intentionally insecure. Only use inside an isolated Host-only network.
 
 #### Step 16 — Install Sysmon
 
@@ -322,7 +322,7 @@ Verify:
 auditpol /get /category:*
 ```
 
-> ✅ **Take a snapshot:** `Win10-Clean Install` — Fresh install, RDP enabled, victim account created, Sysmon running.
+> **Take a snapshot:** `Win10-Clean Install` — Fresh install, RDP enabled, victim account created, Sysmon running.
 
 ---
 
@@ -421,7 +421,7 @@ Set time range: **Last 15 minutes**
 
 You should see Windows Event Log entries from Win10-Target.
 
-> ✅ **Take a snapshot:** `Win10-Forwarder Configured` — Full log pipeline working.
+> **Take a snapshot:** `Win10-Forwarder Configured` — Full log pipeline working.
 
 ---
 
@@ -456,460 +456,25 @@ If ping is blocked, allow ICMP on Windows:
 New-NetFirewallRule -DisplayName "Allow ICMPv4" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
 ```
 
-🎉 **Setup Complete!** Your lab environment is ready.
+**Setup Complete!** Your lab environment is ready.
 
 ---
 
-## 🧪 Labs
+## Labs
+
+| # | Scenario | Details |
+|---|----------|---------|
+| 1 | [Brute Force Detection](docs/lab1-brute-force.md) | RDP brute force, EventCode 4625, threshold alerting |
+| 2 | [Network Reconnaissance](docs/lab2-port-scan.md) | Nmap scans, Sysmon EventCode 3, port enumeration |
+| 3 | [C2 Beaconing](docs/lab3-beaconing.md) | Timing analysis, connection patterns, beacon detection |
+| 4 | Privilege Escalation Detection | *Coming soon* |
+| 5 | Malware Detection | *Coming soon* |
+| 6 | Rule Tuning | *Coming soon* |
+| 7 | Phishing Analysis | *Coming soon* |
 
 ---
 
-### Lab 1 — Brute Force Detection
-
-> **Goal:** Simulate an RDP brute-force attack from Kali against Windows 10 and detect it in Splunk using failed login events (EventCode 4625).
-
-**MITRE ATT&CK:** T1110.001 (Brute Force: Password Guessing)
-
-#### Pre-requisites on Win10-Target
-
-Disable Network Level Authentication (NLA) to allow Hydra to connect:
-
-```powershell
-Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -Name "UserAuthentication" -Value 0
-Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -Name "SecurityLayer" -Value 0
-```
-
-#### Step 1 — Confirm Target IP
-
-On Win10-Target:
-```cmd
-ipconfig
-```
-Note the IP (e.g., `192.168.221.129`).
-
-#### Step 2 — Generate Wordlist
-
-On Kali:
-```bash
-head -500 /usr/share/wordlists/rockyou.txt > ~/lab_wordlist.txt
-echo "Password1" >> ~/lab_wordlist.txt
-```
-
-#### Step 3 — Launch Brute-Force Attack
-
-**Option A — Ncrack** (most reliable for RDP):
-```bash
-ncrack -u labuser -P ~/lab_wordlist.txt rdp://192.168.221.129 --connection-limit 1
-```
-
-**Option B — Hydra:**
-```bash
-hydra -l labuser -P ~/lab_wordlist.txt rdp://192.168.221.129 -t 1 -V -W 3
-```
-
-**Option C — NetExec:**
-```bash
-nxc rdp 192.168.221.129 -u labuser -p ~/lab_wordlist.txt
-```
-
----
-
-#### Phase 1 — DETECT
-
-**Alert Trigger:** High volume of EventCode 4625 (Failed Logon) from a single source IP.
-
-**Core Detection Query:**
-```spl
-index=win_logs EventCode=4625
-| stats count by src_ip, Account_Name
-| where count > 10
-| sort -count
-```
-
-**Time-bucketed Pattern:**
-```spl
-index=win_logs EventCode=4625
-| timechart span=1m count by src_ip
-```
-
-**Check for Successful Logons:**
-```spl
-index=win_logs (EventCode=4624 OR EventCode=4625)
-| stats count by EventCode, src_ip, Account_Name
-| sort src_ip
-```
-
----
-
-#### Phase 2 — TRIAGE
-
-| Question | Answer Source |
-|----------|---------------|
-| Which account targeted? | EventCode 4625 → `Account_Name` field |
-| Source IP? | `src_ip` — internal or external? |
-| How many attempts? | `count` in Splunk query |
-| Logon Type? | `Logon_Type` — 10 = RDP |
-| Any successes? | EventCode 4624 from same `src_ip` |
-| Account locked? | Check AD or local account status |
-
-**Severity Classification:**
-- **Medium** — Failures only, no 4624 → Block and monitor
-- **CRITICAL** — 4624 appears after multiple 4625s → Breach confirmed
-- **Higher Priority** — Internal source IP → Lateral movement or insider threat
-
----
-
-#### Phase 3 — CONTAIN
-
-```powershell
-# Block attacker IP at firewall
-sudo ufw deny from <KALI_IP> to any
-
-# Lock targeted account
-net user labuser /active:no
-
-# Or via AD
-Disable-ADAccount -Identity "labuser"
-
-# Check account status
-net user labuser
-```
-
----
-
-#### Phase 4 — INVESTIGATE
-
-**Full Attack Timeline:**
-```spl
-index=win_logs (EventCode=4625 OR EventCode=4624 OR EventCode=4648) src_ip="<KALI_IP>"
-| table _time, EventCode, Account_Name, src_ip, Logon_Type
-| sort _time
-```
-
-**If Breach Confirmed — Post-Exploitation:**
-```spl
-index=win_logs EventCode=4688 OR EventCode=1
-| where _time > "[time of 4624]"
-| table _time, Account_Name, Image, CommandLine
-```
-
----
-
-#### Phase 5 — ESCALATE & DOCUMENT
-
-**Escalate to L2 if:**
-- Any EventCode 4624 confirmed from attacker IP
-- Attack came from external IP
-- Multiple accounts targeted simultaneously
-- Attacker IP matches threat intel / blacklist
-
-**Incident Ticket Template:**
-```markdown
-## INCIDENT REPORT — RDP Brute Force Attack
-
-| Field | Value |
-|-------|-------|
-| Detection Time | [timestamp] |
-| Alert Source | Splunk — EventCode 4625 threshold breach |
-| Attacker IP | <KALI_IP> (internal/external) |
-| Target Account | labuser |
-| Target Host | Win10-Target |
-| Total Attempts | [count] |
-| Timeframe | [start] to [end] |
-| Logon Type | 10 (RemoteInteractive / RDP) |
-| Breach Confirmed | Yes / No |
-| 4624 Observed | Yes / No |
-| Actions Taken | IP blocked, account locked, host isolated |
-| Escalated To | [L2 name] |
-| MITRE ATT&CK | T1110.001 — Brute Force: Password Guessing |
-```
-
----
-
-#### Phase 6 — REMEDIATE
-
-| Fix | Reason |
-|-----|--------|
-| Account lockout after 5 attempts | Stops brute force cold |
-| Enable MFA on RDP | Password alone is insufficient |
-| Enable NLA | Auth required before RDP session opens |
-| Disable RDP if not needed | Remove attack surface entirely |
-| Geo-block RDP from outside country | Reduce external exposure |
-| Deploy fail2ban equivalent | Auto-block threshold-breaching IPs |
-| Use non-standard RDP port | Reduces automated scanning hits |
-
----
-
-### Lab 2 — Network Reconnaissance & Port Scan Detection
-
-> **Goal:** Simulate Nmap port scans from Kali against Windows 10 and detect scanning activity in Splunk by counting distinct destination ports from the same source IP.
-
-**MITRE ATT&CK:** T1046 (Network Service Discovery), T1595 (Active Scanning)
-
-#### Step 1 — Confirm Target IP
-
-On Win10-Target:
-```cmd
-ipconfig
-```
-
-#### Step 2 — Start Packet Capture on Windows
-
-Open **Wireshark** on Win10-Target, select the correct network adapter, and start capturing.
-
-#### Step 3 — Run Nmap Scans from Kali
-
-```bash
-# Stealth SYN scan
-nmap -sS <Win10-IP>
-
-# Aggressive scan with service/OS detection
-nmap -A <Win10-IP>
-
-# All ports scan
-nmap -p- <Win10-IP>
-
-# OS fingerprinting
-nmap -O <Win10-IP>
-
-# Host discovery (ping sweep)
-nmap -sn <Win10-IP>
-
-# Full SYN port scan
-nmap -sS -p- <Win10-IP>
-
-# Service and version detection
-nmap -sV -sC -p 22,80,443,3389,445,139 <Win10-IP>
-```
-
-#### Step 4 — Observe SYN Packets in Wireshark
-
-Apply filter:
-```
-tcp.flags.syn==1 and tcp.flags.ack==0
-```
-
-This reveals a high volume of SYN packets from Kali IP toward many ports — typical of port scanning behavior.
-
----
-
-#### Phase 1 — DETECT
-
-**Alert Triggers:**
-- Sysmon EventCode 3 — burst of network connections to multiple destination ports from a single source IP
-- Windows Firewall EventCode 5157 — blocked inbound connection attempts across multiple ports
-- No corresponding application traffic pattern — pure port enumeration
-
-**Port Scan Detection:**
-```spl
-index=win_logs EventCode=3
-| stats dc(DestinationPort) as unique_ports, count by SourceIp, DestinationIp
-| where unique_ports > 15
-| sort -unique_ports
-```
-
-**Timeline of Scan:**
-```spl
-index=win_logs EventCode=3 SourceIp="<KALI_IP>"
-| timechart span=10s count
-```
-
-**Which Ports Were Probed:**
-```spl
-index=win_logs EventCode=3 SourceIp="<KALI_IP>"
-| stats count by DestinationPort
-| sort -count
-```
-
-**Firewall Blocked Traffic:**
-```spl
-index=win_logs EventCode=5157
-| stats dc(DestinationPort) as unique_ports by SourceAddress, DestAddress
-| where unique_ports > 15
-| sort -unique_ports
-```
-
----
-
-#### Phase 2 — TRIAGE
-
-| Question | Where to Look |
-|----------|---------------|
-| Which IP is scanning? | Sysmon EventCode 3 — `SourceIp` field |
-| Internal or external source? | Compare `SourceIp` against internal subnet |
-| How many ports probed? | `dc(DestinationPort)` in Splunk |
-| How long did scan last? | Earliest vs latest time in results |
-| Did scan find open ports? | Check which Destination Ports got responses |
-| Did anything follow the scan? | EventCode 4624/4625 from same IP post-scan |
-
-**Severity:**
-- Internal IP scanning internally → **Medium** (possible compromised host)
-- External IP scanning perimeter → **High** (active external reconnaissance)
-- Scan followed by exploitation → **Critical** (escalate now)
-
----
-
-#### Phase 3 — CONTAIN
-
-```powershell
-# Block scanning IP at perimeter firewall
-
-# Block at Windows Firewall (if internal attacker)
-netsh advfirewall firewall add rule name="Block Scanner" dir=in action=block remoteip=<KALI_IP>
-
-# Block at Linux perimeter
-sudo ufw deny from <KALI_IP> to any
-```
-
----
-
-#### Phase 4 — INVESTIGATE
-
-**Did scanner connect to open ports after scanning?**
-```spl
-index=win_logs EventCode=3 SourceIp="<KALI_IP>"
-| stats count by DestinationPort
-| sort -count
-```
-
-**Any login attempts from scanning IP after scan?**
-```spl
-index=win_logs (EventCode=4624 OR EventCode=4625) src_ip="<KALI_IP>"
-| table _time, EventCode, Account_Name, src_ip, Logon_Type
-| sort _time
-```
-
-**Any other hosts scanned from same source?**
-```spl
-index=win_logs EventCode=3 SourceIp="<KALI_IP>"
-| stats dc(DestinationIp) as hosts_scanned, values(DestinationIp) as targets by SourceIp
-```
-
-**Attack Timeline:**
-```
-[T+0]   First Sysmon EventCode 3 from KALI_IP
-[T+xs]  Burst of connections across multiple ports — scan pattern confirmed
-[T+ym]  Scan ends — unique_ports count peaks
-[T+zm]  Any EventCode 4624/4625 from same IP? → exploitation attempt
-```
-
----
-
-#### Phase 5 — ESCALATE & DOCUMENT
-
-**Escalate to L2 when:**
-- Scan source is confirmed external IP
-- Scan is immediately followed by login attempts or exploitation
-- Multiple internal hosts scanned (lateral recon after initial compromise)
-- Scan pattern matches known threat actor tooling
-
-**Incident Report Template:**
-```markdown
-## INCIDENT REPORT — Network Port Scan / Reconnaissance
-
-| Field | Value |
-|-------|-------|
-| Detection Time | [timestamp] |
-| Alert Source | Splunk — Sysmon EventCode 3 dc(DestinationPort) threshold |
-| Scanning IP | <KALI_IP> (internal/external) |
-| Target Host | Win10-Target |
-| Ports Probed | [count] unique ports |
-| Scan Duration | [start_time] to [end_time] |
-| Open Ports Found | [list ports with inbound connections] |
-| Follow-on Action | Yes / No — [login attempts / exploit attempts] |
-| Actions Taken | Scanning IP blocked, L2 notified |
-| MITRE ATT&CK | T1046 / T1595 |
-```
-
----
-
-#### Phase 6 — REMEDIATE
-
-| Fix | Reason |
-|-----|--------|
-| Enable host-based firewall on all endpoints | Blocks unsolicited inbound probes |
-| Deploy IDS/IPS (Snort / Suricata) | Detects nmap scan signatures automatically |
-| Enable Sysmon with network logging (EventCode 3) | Core visibility for scan detection |
-| Network segmentation / VLANs | Limits which hosts an attacker can reach |
-| Alert rule: dc(DestinationPort) > 15 in 60s | Automates detection |
-| Geo-block external IP ranges at perimeter | Reduces external reconnaissance exposure |
-| Disable unnecessary open ports/services | Shrinks the attack surface |
-
----
-
-### Lab 3 — Beaconing / C2 Detection
-
-> **Goal:** Simulate command-and-control style beaconing traffic from Kali to Windows 10 and detect the repeated connection pattern in Splunk using timing-based analysis.
-
-**MITRE ATT&CK:** T1071 (Application Layer Protocol)
-
-#### Step 1 — Confirm Target IP
-
-On Win10-Target:
-```cmd
-ipconfig
-```
-
-#### Step 2 — Start a Listener on Windows
-
-Download Nmap on Win10 VM to get Ncat, then open Command Prompt as Administrator:
-
-```cmd
-ncat -lvp 4444
-```
-
-If `nc` is not available, use `ncat` (included with Nmap).
-
-#### Step 3 — Start Repeated Connections from Kali
-
-From Kali, run a loop to generate repeated outbound connections every 30 seconds:
-
-```bash
-while true; do nc 192.168.221.129 4444; sleep 30; done
-```
-
-This creates a predictable callback pattern similar to beaconing or C2 activity.
-
-#### Step 4 — Observe Traffic in Wireshark
-
-On Windows, open Wireshark and watch repeated connection attempts come in at regular intervals.
-
-Filter: `tcp.port == 4444`
-
----
-
-#### Detection
-
-**Data Source:** Network or traffic logs forwarded to Splunk.
-
-**Key Idea:** Look for repeated connections from the same source to the same destination at consistent time gaps.
-
-**Beaconing Detection Query:**
-```spl
-index=main
-| sort 0 src_ip dest_ip _time
-| streamstats current=f last(_time) as prev_time by src_ip dest_ip
-| eval interval = _time - prev_time
-| stats count, avg(interval) as avg_interval, stdev(interval) as stdev_interval by src_ip dest_ip
-| where count > 5 AND avg_interval < 300 AND stdev_interval < 10
-| sort -count
-```
-
-This type of timing analysis is commonly used to identify beaconing because malicious check-ins often happen at regular intervals with low standard deviation.
-
----
-
-#### Triage Notes
-
-- **True positive** in the lab
-- **Source IP:** Kali attacker VM
-- **Destination IP:** Windows 10 VM
-- **Interval:** Highly consistent between connections — main clue for beaconing
-- **Confirmed by:** Both Wireshark and Splunk
-
----
-
-## 🗺️ MITRE ATT&CK Mapping
+## MITRE ATT&CK Mapping
 
 ### Lab 1 — Brute Force
 
@@ -957,7 +522,7 @@ Reconnaissance
 
 ---
 
-## 📊 Key Event IDs
+## Key Event IDs
 
 ### Windows Security Log
 
@@ -1002,13 +567,12 @@ Reconnaissance
 
 ---
 
-## 👤 Author
+## Author
 
 **SOC Analyst Home Lab** — Built for educational purposes in an isolated environment.
 
-> ⚠️ **Disclaimer:** This lab was built for educational purposes in an isolated environment. No production systems were used. All attack traffic stays within the Host-only virtual network.
+> **Disclaimer:** This lab was built for educational purposes in an isolated environment. No production systems were used. All attack traffic stays within the Host-only virtual network.
 
 ---
 
 *Last updated: July 2026*
-"""
