@@ -86,11 +86,27 @@ By the end, you will have practical skills in:
 |    | Attacker|    | Victim |           |
 |    +---------+    +--------+           |
 +-----------------------------------------+
+
 ```
+-----
+
+
+Image Illustration
+
+![Image illustrations](screenshots/setup/Host-With-VMs.png)
+
+
+---
+
+
+After installation image illustrations
+
+![After installation image illustrations](screenshots/setup/Setup-image-illustration.png)
 
 > **Warning:** All attack traffic stays inside the isolated Host-only network. Never expose these VMs to the internet.
 
 ---
+
 
 ## Setup Guide
 
