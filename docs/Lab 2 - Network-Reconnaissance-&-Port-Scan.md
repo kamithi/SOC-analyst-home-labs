@@ -43,7 +43,7 @@ ipconfig
 
 Note the IPv4 address (e.g., `192.168.221.129`).
 
-![Windows 10 IP Configuration](screenshots/lab2/win10-ipconfig.png)
+![Windows 10 IP Configuration](../screenshots/lab2/win10-ipconfig.png)
 
 ---
 
@@ -53,7 +53,7 @@ Open **Wireshark** on the Windows 10 VM:
 1. Select the correct network adapter (Ethernet0)
 2. Click the blue shark fin to start capturing
 
-![Wireshark Capture Start](screenshots/lab2/wireshark-syn.png)
+![Wireshark Capture Start](../screenshots/lab2/wireshark-syn.png)
 
 ---
 
@@ -84,7 +84,7 @@ nmap -sS -p- 192.168.221.129
 nmap -sV -sC -p 22,80,443,3389,445,139 192.168.221.129
 ```
 
-![Nmap Scan Output](screenshots/lab2/Nmap-on-Kali.png)
+![Nmap Scan Output](../screenshots/lab2/Nmap-on-Kali.png)
 
 ---
 
@@ -98,7 +98,7 @@ tcp.flags.syn==1 and tcp.flags.ack==0
 
 This reveals a high volume of SYN packets from the Kali IP toward many different destination ports — the signature behavior of port scanning.
 
-![Wireshark SYN Packets](screenshots/lab2/Wireshark-SYN-capture-(Win10).png)
+![Wireshark SYN Packets](../screenshots/lab2/Wireshark-SYN-capture-(Win10).png)
 
 ---
 
@@ -142,7 +142,7 @@ index=main EventCode=5157
 | sort -unique_ports
 ```
 
-![Splunk Port Scan Detection](screenshots/lab2/Splunk-port-scan.png)
+![Splunk Port Scan Detection](../screenshots/lab2/Splunk-port-scan.png)
 
 ---
 
