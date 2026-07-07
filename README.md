@@ -1,4 +1,3 @@
-
 🛡️ SOC Analyst Home Lab
 
 > **Hands-on cybersecurity lab simulating real-world Security Operations Center scenarios.**
