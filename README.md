@@ -115,7 +115,7 @@ Image illustration(After installation)
 | Requirement | Specification | Notes |
 |-------------|---------------|-------|
 | Host RAM | 16–32 GB | 12–16 GB allocated to VMs |
-| Storage | 150+ GB free | Kali: 80 GB, Win10: 60 GB |
+| Storage | 150+ GB free | Kali: 40 GB, Win10: 60 GB |
 | CPU | 4+ cores with virtualization | Intel VT-x / AMD-V in BIOS |
 | OS | Windows 10/11 host | Administrator access required |
 | Network | Internet for downloads | VMs use isolated network |
@@ -183,7 +183,7 @@ All key services should show **Running**.
 
 1. Go to: [https://www.kali.org/get-kali/#kali-installer-images](https://www.kali.org/get-kali/#kali-installer-images)
 2. Download the **64-bit Installer Image**
-3. Verify SHA256 checksum:
+3. Verify SHA256 checksum (optional):
 
 ```powershell
 Get-FileHash "kalilinux-2025.2-installer-amd64.iso" -Algorithm SHA256
@@ -292,18 +292,19 @@ Inside Win10 VM: File Explorer → DVD Drive (D:) → Setup → Next → Next �
 #### Step 15 — Configure Windows 10
 
 **Rename computer:**
-```powershell
+
+```Powershell
 Rename-Computer -NewName "Win10-Target" -Restart
 ```
 
 **Enable RDP:**
-```powershell
+```Powershell
 Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
 Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 ```
 
 **Create weak victim account (for brute-force lab):**
-```powershell
+```Powershell
 New-LocalUser -Name "victim" -Password (ConvertTo-SecureString "Password123" -AsPlainText -Force) -FullName "Lab Victim" -Description "Weak account for brute-force lab"
 Add-LocalGroupMember -Group "Remote Desktop Users" -Member "victim"
 Add-LocalGroupMember -Group "Users" -Member "victim"
@@ -313,7 +314,7 @@ Add-LocalGroupMember -Group "Users" -Member "victim"
 
 #### Step 16 — Install Sysmon
 
-```powershell
+```Powershell
 New-Item -ItemType Directory -Path "C:\Tools" -Force
 Invoke-WebRequest -Uri "https://download.sysinternals.com/files/Sysmon.zip" -OutFile "C:\Tools\Sysmon.zip"
 Expand-Archive -Path "C:\Tools\Sysmon.zip" -DestinationPath "C:\Tools\Sysmon\"
@@ -322,19 +323,19 @@ cd C:\Tools\Sysmon\
 ```
 
 Verify:
-```powershell
+```Powershell
 Get-Service Sysmon64
 ```
 
 #### Step 17 — Enable Audit Logging
 
-```powershell
+```Powershell
 auditpol /set /subcategory:"Logon" /success:enable /failure:enable
 auditpol /set /subcategory:"Credential Validation" /success:enable /failure:enable
 ```
 
 Verify:
-```powershell
+```Powershell
 auditpol /get /category:*
 ```
 
