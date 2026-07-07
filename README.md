@@ -21,9 +21,9 @@
   - [Phase 5: Splunk Universal Forwarder](#phase-5-splunk-universal-forwarder)
   - [Phase 6: Network Verification](#phase-6-network-verification)
 - [Labs](#labs)
-  - [Lab 1: Brute Force Detection](#lab-1--brute-force-detection)
-  - [Lab 2: Network Reconnaissance & Port Scan Detection](#lab-2--network-reconnaissance--port-scan-detection)
-  - [Lab 3: Beaconing / C2 Detection](#lab-3--beaconing--c2-detection)
+  - [Lab 1: Brute Force Detection](docs/Lab1-Brute-force.md)
+  - [Lab 2: Network Reconnaissance & Port Scan Detection](docs/Lab2-Network-Reconnaissance-&-Port-Scan.md)
+  - [Lab 3: Beaconing / C2 Detection](docs/Lab3-C2-Beaconing.md)
 - [MITRE ATT&CK Mapping](#mitre-attck-mapping)
 - [Key Event IDs](#key-event-ids)
 - [Author](#author)
@@ -45,9 +45,9 @@ By the end, you will have practical skills in:
 
 | # | Scenario | Key Skills | MITRE |
 |---|----------|----------|-------|
-| 1 | [Brute Force Detection](docs/lab1-brute-force.md) | Failed logon analysis, threshold alerting | T1110.001 |
-| 2 | [Network Reconnaissance](docs/lab2-port-scan.md) | Port scan detection, SYN analysis | T1046, T1595 |
-| 3 | [C2 Beaconing](docs/lab3-beaconing.md) | Timing analysis, connection patterns | T1071 |
+| 1 | [Brute Force Detection](docs/Lab1-Brute-force.md) | Failed logon analysis, threshold alerting | T1110.001 |
+| 2 | [Network Reconnaissance](docs/Lab2-Network-Reconnaissance-&-Port-Scan.md) | Port scan detection, SYN analysis | T1046, T1595 |
+| 3 | [C2 Beaconing](docs/Lab3-C2-Beaconing.md) | Timing analysis, connection patterns | T1071 |
 | 4 | Privilege Escalation Detection | Process analysis, token manipulation | T1134 |
 | 5 | Malware Detection | Behavioral analysis, hash verification | T1055 |
 | 6 | Rule Tuning | False positive reduction, threshold optimization | — |
