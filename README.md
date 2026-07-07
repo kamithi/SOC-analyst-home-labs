@@ -62,7 +62,7 @@ By the end, you will have practical skills in:
 | **Host Machine** | Physical laptop/desktop (Windows 10/11) |
 | **Hypervisor** | VMware Workstation Pro 25.x |
 | **Attacker VM** | Kali Linux (VM 1) |
-| **Target VM** | Windows 10 Pro (VM 2) |
+| **Target VM** | Windows 10 (VM 2) |
 | **SIEM** | Splunk Enterprise (on host) |
 | **Forwarder** | Splunk Universal Forwarder (on Win10) |
 | **EDR** | Microsoft Sysmon (on Win10) |
