@@ -97,7 +97,7 @@ nxc rdp 192.168.221.129 -u labuser -p ~/lab_wordlist.txt
 **Core Splunk Detection Query:**
 
 ```spl
-index=win_logs EventCode=4625
+index=main EventCode=4625
 | stats count by src_ip, Account_Name
 | where count > 10
 | sort -count
@@ -106,14 +106,14 @@ index=win_logs EventCode=4625
 **Time-Bucketed Pattern Analysis:**
 
 ```spl
-index=win_logs EventCode=4625
+index=main EventCode=4625
 | timechart span=1m count by src_ip
 ```
 
 **Check for Successful Logons:**
 
 ```spl
-index=win_logs (EventCode=4624 OR EventCode=4625)
+index=main (EventCode=4624 OR EventCode=4625)
 | stats count by EventCode, src_ip, Account_Name
 | sort src_ip
 ```
@@ -175,7 +175,7 @@ net user labuser
 **Full Attack Timeline:**
 
 ```spl
-index=win_logs (EventCode=4625 OR EventCode=4624 OR EventCode=4648) src_ip="<KALI_IP>"
+index=main (EventCode=4625 OR EventCode=4624 OR EventCode=4648) src_ip="<KALI_IP>"
 | table _time, EventCode, Account_Name, src_ip, Logon_Type
 | sort _time
 ```
@@ -183,7 +183,7 @@ index=win_logs (EventCode=4625 OR EventCode=4624 OR EventCode=4648) src_ip="<KAL
 **Logon Type Breakdown:**
 
 ```spl
-index=win_logs EventCode=4625 src_ip="<KALI_IP>"
+index=main EventCode=4625 src_ip="<KALI_IP>"
 | stats count by Logon_Type
 | eval Logon_Meaning=case(
     Logon_Type=="3", "Network",
@@ -195,7 +195,7 @@ index=win_logs EventCode=4625 src_ip="<KALI_IP>"
 **If Breach Confirmed — Post-Exploitation Analysis:**
 
 ```spl
-index=win_logs EventCode=4688 OR EventCode=1
+index=main EventCode=4688 OR EventCode=1
 | where _time > "[time of 4624]"
 | table _time, Account_Name, Image, CommandLine
 ```
